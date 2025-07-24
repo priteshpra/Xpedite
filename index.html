@@ -262,13 +262,14 @@
     }
 
     .code-area {
-      height: 200px;
+      /* height: 200px; */
       padding: 12px;
       font-family: 'Courier New', monospace;
       font-size: 12px;
       border: none;
       outline: none;
-      resize: none;
+      width: 100%;
+      /* resize: none; */
       background: #fff;
     }
 
@@ -356,11 +357,27 @@
       cursor: pointer;
     }
 
-    .tree-item:not(.tree-indent).active {
+    .tree-item:not(.collapsible).active {
       border-bottom: 3px solid #007bff;
       /* Bootstrap primary blue */
       padding-bottom: 5px;
       /* optional for spacing */
+    }
+
+    /* Copy Css */
+    .copy-icon {
+      right: 10px;
+      top: 10px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .copy-icon:hover {
+      color: #0056b3;
+    }
+
+    .tree-item.active {
+      font-weight: bold;
     }
   </style>
 </head>
@@ -416,38 +433,51 @@
       </div>
 
       <div class="sidebar-section new">
-        <div class="tree-item">
+        <div class="tree-item" id="history-tab">
           <span class="expand-icon"><i class="fas fa-history"></i></span>
           <span>History</span>
         </div>
-        <div class="tree-item active">
+        <div class="tree-item active" id="collections-tab">
           <span class="expand-icon"><i class="fas fa-layer-group"></i></span>
           <span>Collections</span>
         </div>
       </div>
-
-      <div class="sidebar-section">
-        <div class="tree-item">
-          <span class="expand-icon">▼</span>
-          <span>Jira Operations</span>
+      <div id="collections-section">
+        <div class="sidebar-section">
+          <div class="tree-item collapsible">
+            <span class="expand-icon">▼</span>
+            <span>Jira Operations</span>
+          </div>
+          <div class="collapsible-content">
+            <div class="tree-item tree-indent">Create Cycle</div>
+            <div class="tree-item tree-indent">Add Test To Cycle</div>
+            <div class="tree-item tree-indent">Execute Test Cycle</div>
+            <div class="tree-item tree-indent">Update Test Cycle</div>
+          </div>
         </div>
-        <div class="tree-item tree-indent">Create Cycle</div>
-        <div class="tree-item tree-indent">Add Test To Cycle</div>
-        <div class="tree-item tree-indent">Execute Test Cycle</div>
-        <div class="tree-item tree-indent">Update Test Cycle</div>
+
+        <div class="sidebar-section">
+          <div class="tree-item collapsible">
+            <span class="expand-icon">▼</span>
+            <span>REST Operations</span>
+          </div>
+          <div class="collapsible-content">
+            <div class="tree-item tree-indent active">GET Request</div>
+            <div class="tree-item tree-indent">GET Request</div>
+            <div class="tree-item tree-indent">Team B1</div>
+            <div class="tree-item tree-indent">Team B1</div>
+            <div class="tree-item tree-indent">Team B1</div>
+            <div class="tree-item tree-indent">Department C</div>
+          </div>
+        </div>
       </div>
-
-      <div class="sidebar-section">
-        <div class="tree-item">
-          <span class="expand-icon">▼</span>
-          <span>REST Operations</span>
+      <!-- History Section -->
+      <div id="history-section" style="display: none;">
+        <div class="sidebar-section">
+          <div class="tree-item tree-indent">Request 1 - GET /users</div>
+          <div class="tree-item tree-indent">Request 2 - POST /login</div>
+          <div class="tree-item tree-indent">Request 3 - PUT /update</div>
         </div>
-        <div class="tree-item tree-indent active">GET Request</div>
-        <div class="tree-item tree-indent">GET Request</div>
-        <div class="tree-item tree-indent">Team B1</div>
-        <div class="tree-item tree-indent">Team B1</div>
-        <div class="tree-item tree-indent">Team B1</div>
-        <div class="tree-item tree-indent">Department C</div>
       </div>
     </div>
 
@@ -456,7 +486,7 @@
       <div class="request-header">
         <span class="method-badge">GET</span>
         <span class="request-title">New Request</span>
-        <div class="tab">+</div>
+        <div class="tab" id="add-request-tab">+</div>
         <div class="action-buttons">
           <button class="btn btn-primary">▶ Send</button>
           <button class="btn">💾 Save</button>
@@ -490,17 +520,22 @@
             x-www-form-urlencoded
           </label>
         </div>
+        <div style="margin-left: 1%;">
+          <select class="form-control" style="border: none; background: none; font-size: 11px;width: 100px;">
+            <option>JSON</option>
+            <option>Text</option>
+            <option>JavaScript</option>
+            <option>HTML</option>
+            <option>XML</option>
+          </select>
+          <i class="fas fa-copy copy-icon" title="Copy to clipboard" data-target="requestJson"></i>
 
+        </div>
         <!-- ✅ This is the missing section from the image -->
         <div class="code-editor">
+
           <div class="code-header">
-            <select style="border: none; background: none; font-size: 11px;">
-              <option>JSON</option>
-              <option>Text</option>
-              <option>JavaScript</option>
-              <option>HTML</option>
-              <option>XML</option>
-            </select>
+
             <div class="code-tabs">
               <button class="code-tab active">Default</button>
               <button class="code-tab">Scenario</button>
@@ -508,7 +543,7 @@
             </div>
             <div class="zoom-control">125% ▼</div>
           </div>
-          <textarea class="code-area" placeholder="Enter your JSON here..."></textarea>
+          <textarea class="code-area" rows="5" cols="50" placeholder="Enter your JSON here..."></textarea>
           <div style="padding: 8px 12px; font-size: 11px; background: #f8f9fa; border-top: 1px solid #ddd;">
             <button class="btn" style="margin-right: 8px;">Load Default</button>
             <button class="btn">Make Default</button>
@@ -538,7 +573,7 @@
             </div>
             <div class="zoom-control">100% ▼</div>
           </div>
-          <textarea class="code-area" placeholder="Response will appear here..."></textarea>
+          <textarea class="code-area" rows="5" cols="50" placeholder="Response will appear here..."></textarea>
           <div style="padding: 8px 12px; font-size: 11px; background: #f8f9fa; border-top: 1px solid #ddd;">
             <button class="btn" style="margin-right: 8px;">Load Default</button>
             <button class="btn" style="margin-right: 8px;">Make Default</button>
@@ -576,8 +611,50 @@
       </div>
     </div>
   </div>
-
   <script>
+    const historyTab = document.getElementById('history-tab');
+    const collectionsTab = document.getElementById('collections-tab');
+    const historySection = document.getElementById('history-section');
+    const collectionsSection = document.getElementById('collections-section');
+
+    historyTab.addEventListener('click', () => {
+      historyTab.classList.add('active');
+      collectionsTab.classList.remove('active');
+      historySection.style.display = 'block';
+      collectionsSection.style.display = 'none';
+    });
+
+    collectionsTab.addEventListener('click', () => {
+      collectionsTab.classList.add('active');
+      historyTab.classList.remove('active');
+      collectionsSection.style.display = 'block';
+      historySection.style.display = 'none';
+    });
+  </script>
+  <script>
+    // copy to clipboard functionality
+    document.querySelectorAll('.copy-icon').forEach(icon => {
+      icon.addEventListener('click', function () {
+        const targetId = this.getAttribute('data-target');
+        const target = document.getElementById(targetId);
+        if (target) {
+          navigator.clipboard.writeText(target.value)
+            .then(() => alert('Copied to clipboard!'))
+            .catch(err => alert('Failed to copy!'));
+        }
+      });
+    });
+
+
+    // collapse code sidebar sections
+    document.querySelectorAll('.collapsible').forEach(toggle => {
+      toggle.addEventListener('click', function () {
+        this.classList.toggle('open');
+        const icon = this.querySelector('.expand-icon');
+        icon.textContent = icon.textContent.trim() === '▼' ? '▶' : '▼';
+      });
+    });
+
     // Basic interactivity
     document.querySelectorAll('.request-tab').forEach(tab => {
       tab.addEventListener('click', function () {
