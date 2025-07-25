@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Xpedite API Test Farm</title>
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> -->
+  <link rel="stylesheet" href="css/all.min.css">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+  <div class="header">
+    <div class="nav-tabs">
+      <div class="navbar">
+        <!-- <span class="nav-icon">📥</span> -->
+        <span class="nav-icon"><img src="Resources/import.png" width="15px" /> </span>
+        <button class="nav-tab">Import</button>
+      </div>
+      <div class="navbar">
+        <!-- <span class="nav-icon">📤</span> -->
+        <span class="nav-icon"><img src="Resources/export.png" width="15px" /></span>
+        <button class="nav-tab">Export</button>
+      </div>
+      <div class="navbar">
+        <!-- <span class="nav-icon">👤</span> -->
+        <span class="nav-icon"><img src="Resources/admin.png" width="15px" /></span>
+        <button class="nav-tab">Admin</button>
+      </div>
+      <div class="navbar">
+        <!-- <span class="nav-icon">🚫</span> -->
+        <span class="nav-icon"><img src="Resources/non-api.png" width="15px" /></span>
+        <button class="nav-tab">Non API</button>
+      </div>
+      <div class="navbar">
+        <!-- <span class="nav-icon">🌐</span> -->
+        <span class="nav-icon"><img src="Resources/environment.png" width="15px" /></span>
+        <button class="nav-tab">Environment</button>
+      </div>
+      <div class="navbar">
+        <!-- <span class="nav-icon">🗄</span> -->
+        <span class="nav-icon"><img src="Resources/database.png" width="15px" /></span>
+        <button class="nav-tab"> Databas</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-container">
+    <!-- Left Sidebar -->
+    <div class="sidebar" id="leftSidebar">
+      <div class="sidebar-section">
+        <select class="dropdown">
+          <option>Select Project</option>
+        </select>
+        <select class="dropdown">
+          <option>Select SubProject</option>
+        </select>
+      </div>
+      <div class="sidebar-section">
+        <input type="text" class="search-input" placeholder="Search..."
+          style="width: 70%; padding: 6px; font-size: 12px; border: 1px solid #ddd; border-radius: 4px;">
+        <!-- <i class="fa fa-search"></i> -->
+        &nbsp;&nbsp;
+        <!-- <i class="fas fa-edit"></i> -->
+        <img src="Resources/beautify.png" width="15px" />
+        &nbsp;&nbsp;
+        <img src="Resources/add.png" width="15px" />
+        <!-- <i class="fas fa-plus-circle"></i> -->
+
+      </div>
+
+      <div class="sidebar-section new">
+        <div class="tree-item" id="history-tab">
+          <span class="expand-icon">
+            <!-- <i class="fas fa-history"></i> -->
+            <img src="Resources/history.png" width="15px" />
+          </span>
+          <span>History</span>
+        </div>
+        <div class="tree-item active" id="collections-tab">
+          <span class="expand-icon">
+            <!-- <i class="fas fa-layer-group"></i> -->
+            <img src="Resources/collection.png" width="15px" />
+          </span>
+          <span>Collections</span>
+        </div>
+      </div>
+      <div id="collections-section">
+        <div class="sidebar-section">
+          <div class="tree-item collapsible">
+            <span class="expand-icon">▼</span>
+            <span>Jira Operations</span>
+          </div>
+          <div class="collapsible-content">
+            <div class="tree-item tree-indent">Create Cycle</div>
+            <div class="tree-item tree-indent">Add Test To Cycle</div>
+            <div class="tree-item tree-indent">Execute Test Cycle</div>
+            <div class="tree-item tree-indent">Update Test Cycle</div>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="tree-item collapsible">
+            <span class="expand-icon">▼</span>
+            <span>REST Operations</span>
+          </div>
+          <div class="collapsible-content">
+            <div class="tree-item tree-indent ">GET Request</div>
+            <div class="tree-item tree-indent">GET Request</div>
+            <div class="tree-item tree-indent">Team B1</div>
+            <div class="tree-item tree-indent">Team B1</div>
+            <div class="tree-item tree-indent">Team B1</div>
+            <div class="tree-item tree-indent">Department C</div>
+          </div>
+        </div>
+      </div>
+      <!-- History Section -->
+      <div id="history-section" style="display: none;">
+        <div class="sidebar-section">
+          <div class="tree-item tree-indent">Request 1 - GET /users</div>
+          <div class="tree-item tree-indent">Request 2 - POST /login</div>
+          <div class="tree-item tree-indent">Request 3 - PUT /update</div>
+        </div>
+      </div>
+      <!-- Collapse Button -->
+      <button class="btn" id="collapseToggle" style="position: fixed; bottom: 1vh; z-index: 999;">
+        <img src="Resources/collapse.png" width="15px" />
+      </button>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="content-area">
+      <div class="request-header">
+        <span class="method-badge">GET</span>
+        <span class="request-title">New Request</span>
+        <div class="tab" id="add-request-tab">+</div>
+        <div class="action-buttons">
+          <button class="btn btn-primary">▶ Send</button>
+          <button class="btn">💾 Save</button>
+        </div>
+      </div>
+
+      <div class="request-tabs">
+        <button class="request-tab active">Params</button>
+        <button class="request-tab">Authorization</button>
+        <button class="request-tab">Headers</button>
+        <button class="request-tab">Body</button>
+        <button class="request-tab">Settings</button>
+      </div>
+
+      <div class="content-panel">
+        <div class="radio-group">
+          <label class="radio-item">
+            <input type="radio" name="body-type" value="none">
+            none
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="body-type" value="form-data">
+            form-data
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="body-type" value="raw" checked>
+            raw
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="body-type" value="x-www-form-urlencoded">
+            x-www-form-urlencoded
+          </label>
+        </div>
+        <div style="margin-left: 1%;">
+          <select class="" style="background: none; height: 20px; font-size: 11px;width: 100px;">
+            <option>JSON</option>
+            <option>Text</option>
+            <option>JavaScript</option>
+            <option>HTML</option>
+            <option>XML</option>
+          </select>
+          &nbsp;&nbsp;
+          <img src="Resources/beautify.png" width="15px" style="cursor: pointer;" title="Copy to clipboard"
+            id="requestJson" />
+          &nbsp;&nbsp;
+          <img src="Resources/WScopy.png" width="15px" style="cursor: pointer;" title="Copy to clipboard"
+            id="requestJson" />
+          <!-- <i class="fas fa-copy copy-icon" title="Copy to clipboard" data-target="requestJson"></i> -->
+
+        </div>
+        <!-- ✅ This is the missing section from the image -->
+        <div class="code-editor">
+
+          <div class="code-header">
+
+            <div class="code-tabs">
+              <button class="code-tab active">Default</button>
+              <button class="code-tab">Scenario</button>
+              <button class="code-tab">Actual</button>
+            </div>
+            <div class="zoom-control">125% ▼</div>
+          </div>
+          <textarea class="code-area" rows="5" cols="50" placeholder="Enter your JSON here..."></textarea>
+          <div style="padding: 8px 12px; font-size: 11px; background: #f8f9fa; border-top: 1px solid #ddd;">
+            <button class="btn" style="margin-right: 8px;">Load Default</button>
+            <button class="btn">Make Default</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="response-section">
+        <div class="response-header">Response</div>
+
+        <div class="request-tabs">
+          <button class="request-tab active">Headers</button>
+          <button class="request-tab">Body</button>
+        </div>
+
+        <div class="code-editor">
+          <div style="margin-left: 1%;">
+            <select class="" style="background: none; height: 20px; font-size: 11px;width: 100px;">
+              <option>JSON</option>
+              <option>Text</option>
+              <option>JavaScript</option>
+              <option>HTML</option>
+              <option>XML</option>
+            </select>
+            &nbsp;&nbsp;
+            <img src="Resources/beautify.png" width="15px" style="cursor: pointer;" title="Copy to clipboard"
+              id="requestJson" />
+            &nbsp;&nbsp;
+            <img src="Resources/WScopy.png" width="15px" style="cursor: pointer;" title="Copy to clipboard"
+              id="requestJson" />
+            <!-- <i class="fas fa-copy copy-icon" title="Copy to clipboard" data-target="requestJson"></i> -->
+
+          </div>
+          <div class="code-header">
+            <!-- <select style="border: none; background: none; font-size: 11px;">
+              <option>JSON</option>
+            </select> -->
+            <div class="code-tabs">
+              <button class="code-tab active">Default</button>
+              <button class="code-tab">Scenario</button>
+              <button class="code-tab">Actual</button>
+              <button class="code-tab">Expected</button>
+            </div>
+            <div class="zoom-control">100% ▼</div>
+          </div>
+          <textarea class="code-area" rows="5" cols="50" placeholder="Response will appear here..."></textarea>
+          <div style="padding: 8px 12px; font-size: 11px; background: #f8f9fa; border-top: 1px solid #ddd;">
+            <button class="btn" style="margin-right: 8px;">Load Default</button>
+            <button class="btn" style="margin-right: 8px;">Make Default</button>
+            <button class="btn">Parameterize</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="status-bar">
+        <!-- <button class="btn" style="margin-right: 8px;">Load Default</button>
+        <button class="btn" style="margin-right: 8px;">Make Default</button>
+        <button class="btn" style="margin-right: 8px;">Parameterize</button> -->
+        <span style="margin-left: auto;">Status: <span class="status-pass">Pass</span></span>
+        <a href="#" style="color: #007bff; text-decoration: none; font-size: 11px;">View Report</a><br />
+
+      </div>
+      <div style="margin-left:auto">
+        <button class="btn" style="margin-left: 8px;"><img src="Resources/manual.png" width="15px" />
+          Manual</button>&nbsp;&nbsp;
+        <button class="btn" style="margin-left: 8px;"><img src="Resources/automation.png" width="15px" />
+          Automation</button>
+      </div>
+    </div>
+
+    <!-- Right Sidebar -->
+    <div class="right-sidebar">
+      <div class="right-sidebar-icon" title="Toggle view" id="darkModeToggle">
+        <!-- 📱 -->
+        <img src="Resources/dark-mode.png" width="15px" />
+      </div>
+      <div class="right-sidebar-icon" title="Code view" id="toggleCodeBox2">
+        <!-- 💻 -->
+        <img src=" Resources/vertical.png" width="15px" />
+      </div>
+      <div class="right-sidebar-icon" title="Settings" id="toggleCodeBox3">
+        <!-- ⚙️ -->
+        <img src="Resources/coding.png" width="15px" />
+      </div>
+      <div class="right-sidebar-icon" title="Help">
+        <!-- ❓ -->
+        <img src="Resources/info.png" width="15px" />
+      </div>
+      <div class="right-sidebar-icon" title="User profile">
+        <!-- 👤 -->
+        <img src="Resources/support.png" width="15px" />
+      </div>
+    </div>
+
+    <div id="codeSide3Panel" class="code-panel">
+      <div class="code-panel-header">
+        <span class="panel-title">Coding Tools</span>
+        <span class="panel-close" id="closeCodePanel3">
+          <!-- <i class="fas fa-times"></i> -->
+          <img src="Resources/Discard.png" width="15px" />
+        </span>
+      </div>
+      <div class="code-panel-body">
+        <textarea class="panel-textarea" placeholder="Write or paste code here..."></textarea>
+      </div>
+    </div>
+
+    <div id="codeSide2Panel" class="code-panel">
+      <div class="code-panel-header">
+        <span class="panel-title">Coding Tools</span>
+        <span class="panel-close" id="closeCodePanel2">
+          <!-- <i class="fas fa-times"></i> -->
+          <img src="Resources/Discard.png" width="15px" />
+        </span>
+      </div>
+      <div class="code-panel-body">
+        <textarea class="panel-textarea" placeholder="Write or paste code here..."></textarea>
+      </div>
+    </div>
+  </div>
+  <script>
+    const historyTab = document.getElementById('history-tab');
+    const collectionsTab = document.getElementById('collections-tab');
+    const historySection = document.getElementById('history-section');
+    const collectionsSection = document.getElementById('collections-section');
+
+    historyTab.addEventListener('click', () => {
+      historyTab.classList.add('active');
+      collectionsTab.classList.remove('active');
+      historySection.style.display = 'block';
+      collectionsSection.style.display = 'none';
+    });
+
+    collectionsTab.addEventListener('click', () => {
+      collectionsTab.classList.add('active');
+      historyTab.classList.remove('active');
+      collectionsSection.style.display = 'block';
+      historySection.style.display = 'none';
+    });
+  </script>
+  <script>
+    // copy to clipboard functionality
+    document.querySelectorAll('.copy-icon').forEach(icon => {
+      icon.addEventListener('click', function () {
+        const targetId = this.getAttribute('data-target');
+        const target = document.getElementById(targetId);
+        if (target) {
+          navigator.clipboard.writeText(target.value)
+            .then(() => alert('Copied to clipboard!'))
+            .catch(err => alert('Failed to copy!'));
+        }
+      });
+    });
+
+
+    // collapse code sidebar sections
+    document.querySelectorAll('.collapsible').forEach(toggle => {
+      toggle.addEventListener('click', function () {
+        this.classList.toggle('open');
+        const icon = this.querySelector('.expand-icon');
+        icon.textContent = icon.textContent.trim() === '▼' ? '▶' : '▼';
+      });
+    });
+
+    // Basic interactivity
+    document.querySelectorAll('.request-tab').forEach(tab => {
+      tab.addEventListener('click', function () {
+        document.querySelectorAll('.request-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    document.querySelectorAll('.code-tab').forEach(tab => {
+      tab.addEventListener('click', function () {
+        const parent = this.closest('.code-tabs');
+        parent.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    document.querySelectorAll('.tree-item').forEach(item => {
+      item.addEventListener('click', function () {
+        document.querySelectorAll('.tree-item').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    // Send button functionality
+    document.querySelector('.btn-primary').addEventListener('click', function () {
+      alert('API request would be sent here!');
+    });
+  </script>
+  <!-- left side bar functionality Start -->
+  <script>
+    const sidebar = document.getElementById('leftSidebar');
+    const toggleBtn = document.getElementById('collapseToggle');
+    const mainContainer = document.querySelector('.main-container');
+
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('collapsed');
+      toggleBtn.classList.toggle('collapsed');
+      mainContainer.classList.toggle('collapsed-left');
+    });
+  </script>
+  <!-- right side bar functionality Start -->
+  <script>
+    const toggleCodeBox3 = document.getElementById('toggleCodeBox3');
+    const toggleCodeBox2 = document.getElementById('toggleCodeBox2');
+    const closeCodePanel2 = document.getElementById('closeCodePanel2');
+    const closeCodePanel3 = document.getElementById('closeCodePanel3');
+    const codeSide3Panel = document.getElementById('codeSide3Panel');
+    const codeSide2Panel = document.getElementById('codeSide2Panel');
+
+    toggleCodeBox3.addEventListener('click', () => {
+      codeSide3Panel.classList.toggle('open');
+    });
+    toggleCodeBox2.addEventListener('click', () => {
+      codeSide2Panel.classList.toggle('open');
+    });
+
+    closeCodePanel2.addEventListener('click', () => {
+      codeSide2Panel.classList.remove('open');
+    });
+    closeCodePanel3.addEventListener('click', () => {
+      codeSide3Panel.classList.remove('open');
+    });
+  </script>
+
+  <script>
+    const darkModeToggle = document.getElementById('darkModeToggle');
+
+    darkModeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+    });
+
+    // Set default theme on load
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+      }
+    });
+  </script>
+
+
+</body>
+
+</html>
