@@ -252,22 +252,39 @@
     }
 
     .code-area {
-      /* height: 200px; */
-      padding: 12px;
-      font-family: 'Courier New', monospace;
-      font-size: 12px;
-      border: none;
-      outline: none;
       width: 100%;
-      /* resize: none; */
-      background: #fff;
+      padding: 12px;
+      padding-right: 60px;
+      /* To avoid overlap with zoom dropdown */
+      font-family: monospace;
+      font-size: 13px;
+      resize: vertical;
+      box-sizing: border-box;
+    }
+
+    .textarea-container {
+      position: relative;
     }
 
     .zoom-control {
+      position: absolute;
+      /* top: 8px;
+      right: 8px; */
+      top: 55%;
+      background: #f1f1f1;
+      padding: 2px 6px;
+      font-size: 11px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    /* .zoom-control {
       margin-left: auto;
       font-size: 11px;
       color: #666;
-    }
+    } */
 
     .response-section {
       border-top: 1px solid #e0e0e0;
@@ -440,8 +457,8 @@
 
     /* Dark mode styles */
     body.dark-mode {
-    background-color: #1e1e1e;
-    color: #f0f0f0;
+      background-color: #1e1e1e;
+      color: #f0f0f0;
     }
 
     body.dark-mode .header,
@@ -454,8 +471,8 @@
     body.dark-mode .code-header,
     body.dark-mode .code-panel,
     body.dark-mode .status-bar {
-    background-color: #2c2c2c !important;
-    color: #ffffff !important;
+      background-color: #2c2c2c !important;
+      color: #ffffff !important;
     }
 
     body.dark-mode .btn,
@@ -463,29 +480,29 @@
     body.dark-mode .request-tab,
     body.dark-mode .code-tab,
     body.dark-mode .tree-item {
-    background-color: #333 !important;
-    color: #fff !important;
-    border-color: #555;
+      background-color: #333 !important;
+      color: #fff !important;
+      border-color: #555;
     }
 
     body.dark-mode textarea,
     body.dark-mode input,
     body.dark-mode select {
-    background-color: #444 !important;
-    color: white !important;
-    border: 1px solid #666 !important;
+      background-color: #444 !important;
+      color: white !important;
+      border: 1px solid #666 !important;
     }
 
     /* Collapse left sidebar */
     .sidebar.collapsed {
-    width: 0;
-    overflow: hidden;
-    transition: width 0.3s ease;
+      width: 0;
+      overflow: hidden;
+      transition: width 0.3s ease;
     }
 
     /* Expand main container when sidebar is collapsed */
     .main-container.collapsed-left {
-    margin-left: 0 !important;
-    width: 100%;
-    transition: margin-left 0.3s ease;
+      margin-left: 0 !important;
+      width: 100%;
+      transition: margin-left 0.3s ease;
     }

@@ -195,9 +195,17 @@
               <button class="code-tab">Scenario</button>
               <button class="code-tab">Actual</button>
             </div>
-            <div class="zoom-control">125% ▼</div>
+           
           </div>
-          <textarea class="code-area" rows="5" cols="50" placeholder="Enter your JSON here..."></textarea>
+            <div class="textarea-container">
+              <textarea class="code-area" rows="5" cols="50" placeholder="Enter your JSON here..."></textarea>
+            </div>
+           <div class="zoom-control">
+            <select style="height: 30px;width: 70px;"> 
+            <option>50%</option>
+            <option>100%</option>
+           </select>
+          </div>
           <div style="padding: 8px 12px; font-size: 11px; background: #f8f9fa; border-top: 1px solid #ddd;">
             <button class="btn" style="margin-right: 8px;">Load Default</button>
             <button class="btn">Make Default</button>
@@ -242,10 +250,17 @@
               <button class="code-tab">Actual</button>
               <button class="code-tab">Expected</button>
             </div>
-            <div class="zoom-control">100% ▼</div>
+            <!-- <div class="zoom-control">100% ▼</div> -->
           </div>
-          <textarea class="code-area" rows="5" cols="50" placeholder="Response will appear here..."></textarea>
-          <div style="padding: 8px 12px; font-size: 11px; background: #f8f9fa; border-top: 1px solid #ddd;">
+            <div class="textarea-container">
+              <textarea class="code-area" rows="5" cols="50" placeholder="Enter your JSON here..."></textarea>
+            </div>
+           <div class="zoom-control">
+            <select style="height: 30px;width: 70px;"> 
+              <option>50%</option>
+              <option>100%</option>
+           </select>
+          </div>          <div style="padding: 8px 12px; font-size: 11px; background: #f8f9fa; border-top: 1px solid #ddd;">
             <button class="btn" style="margin-right: 8px;">Load Default</button>
             <button class="btn" style="margin-right: 8px;">Make Default</button>
             <button class="btn">Parameterize</button>
@@ -429,12 +444,10 @@
 
   <script>
     const darkModeToggle = document.getElementById('darkModeToggle');
-
     darkModeToggle.addEventListener('click', () => {
       document.body.classList.toggle('dark-mode');
       localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
     });
-
     // Set default theme on load
     window.addEventListener('DOMContentLoaded', () => {
       const savedTheme = localStorage.getItem('theme');
@@ -443,7 +456,6 @@
       }
     });
   </script>
-
 
 </body>
 
